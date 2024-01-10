@@ -1,0 +1,14 @@
+.component {
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    span {
+        font-size: 200px;
+    }
+    h1 {
+        font-weight: 400;
+    }
+}
