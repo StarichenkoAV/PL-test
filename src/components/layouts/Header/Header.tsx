@@ -1,18 +1,20 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "../../common/Icon";
 import css from "./Header.module.scss";
+interface IHeaderProps {
+  onShowCard: () => void;
+}
 
-export const Header: FC = () => {
+export const Header: FC<IHeaderProps> = ({onShowCard}) => {
   const totalCount = 0;
-  const [isShowCard, setIsShowCard] = useState<boolean>(false)
 
   return (
     <header className={css.component}>
       <Link to="/">
         <span className={css.home}>Home</span>
       </Link>
-      <div onClick={(prev) => setIsShowCard(!prev)} className={css.cartButton}>
+      <div onClick={onShowCard} className={css.cartButton}>
         <Icon width="25px" height="25px" name="cart" />
         {totalCount && <span>{totalCount}</span>}
       </div>

@@ -1,7 +1,9 @@
-import React, { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { MainLayout } from "./components/layouts/MainLayout";
 import "./App.module.scss";
+import {getAllItems} from "./store/mainSlice"
+import { useAppDispatch } from "./store";
 
 const HomePage = React.lazy(() =>
   import("./components/pages/HomePage").then(({ HomePage }) => ({
@@ -36,6 +38,14 @@ const getSuspense = (component: ReactNode) => {
 };
 
 function App() {
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+     dispatch(getAllItems())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>

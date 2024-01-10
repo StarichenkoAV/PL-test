@@ -4,6 +4,7 @@
     flex-direction: column;
     width: 280px;
     padding: 20px 0;
+    align-items: center;
     text-align: center;
     // margin-bottom: 65px;
     transition: all 0.2s ease-in-out;
@@ -28,8 +29,9 @@
 
     .bottomBlock {
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
+        gap: 30px;
         margin-top: 20px;
     }
     

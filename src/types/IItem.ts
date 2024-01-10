@@ -5,8 +5,9 @@ export interface IItem {
     title: string;
     imageUrl: string;
     price: number;
+    // category: ECategoty;
     category: string;
-}
+ }
 
 
 

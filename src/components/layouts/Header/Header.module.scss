@@ -19,12 +19,20 @@
 }
 
 .cartButton {
-  border: 1px solid black;
+  border: 1px solid rgb(155, 144, 144);
   border-radius: 20px;
   min-width: 100px;
   padding: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 15px;
   color: black;
+  cursor: pointer;
+  font-size: 23px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 }
