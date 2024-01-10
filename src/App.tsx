@@ -1,15 +1,26 @@
-import React, { Suspense } from "react";
+import React, { ReactNode, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-
 import { MainLayout } from "./components/layouts/MainLayout";
 import "./App.module.scss";
-import { FoodPage } from "./components/pages/FoodPage";
-import { ClothesPage } from "./components/pages/ClothesPage";
-import { ElectronicsPage } from "./components/pages/ElectronicsPage";
 
 const HomePage = React.lazy(() =>
   import("./components/pages/HomePage").then(({ HomePage }) => ({
     default: HomePage,
+  }))
+);
+const FoodPage = React.lazy(() =>
+  import("./components/pages/FoodPage").then(({ FoodPage }) => ({
+    default: FoodPage,
+  }))
+);
+const ClothesPage = React.lazy(() =>
+  import("./components/pages/ClothesPage").then(({ ClothesPage }) => ({
+    default: ClothesPage,
+  }))
+);
+const ElectronicsPage = React.lazy(() =>
+  import("./components/pages/ElectronicsPage").then(({ ElectronicsPage }) => ({
+    default: ElectronicsPage,
   }))
 );
 const NotFoundPage = React.lazy(() =>
@@ -18,23 +29,21 @@ const NotFoundPage = React.lazy(() =>
   }))
 );
 
+const getSuspense = (component: ReactNode) => {
+  return (
+    <Suspense fallback={<div>Идёт загрузка...</div>}>{component}</Suspense>
+  );
+};
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        <Route path="" element={<HomePage />} />
-        <Route path="/food" element={<FoodPage />} />
-        <Route path="/clothes" element={<ClothesPage />} />
-        <Route path="/electronics" element={<ElectronicsPage />} />
-        <Route
-          path="*"
-          element={
-            <Suspense fallback={<div>Идёт загрузка...</div>}>
-              <NotFoundPage />
-            </Suspense>
-          }
-        />
+        <Route path="" element={getSuspense(<HomePage />)} />
+        <Route path="/food" element={getSuspense(<FoodPage />)} />
+        <Route path="/clothes" element={getSuspense(<ClothesPage />)} />
+        <Route path="/electronics" element={getSuspense(<ElectronicsPage />)} />
+        <Route path="*" element={getSuspense(<NotFoundPage />)} />
       </Route>
     </Routes>
   );
