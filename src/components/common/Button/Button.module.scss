@@ -1,0 +1,24 @@
+.component {
+  background-color: var(--color-grey);
+  border-radius: 10px;
+  border: none;
+  color: var(--color-black);
+  line-height: 19px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 10px;
+  &:hover {
+    cursor: pointer;
+    background: var(--color-grey-hover);
+  }
+  &:active {
+    vertical-align: middle;
+    background: var(--color-grey-active);
+  }
+}
+
+@media (max-width: 767px) {
+  .component {
+   width: 100%;
+  }
+}
