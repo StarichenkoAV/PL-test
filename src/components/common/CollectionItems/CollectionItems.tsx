@@ -7,9 +7,7 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 
 export const CollectionItems: FC = () => {
 
-const items = useAppSelector(state => state.main.allItems)
-
-console.log(JSON.stringify(`${items}`));
+const items = useAppSelector(state => state.mainCollection.items)
 
   return (
     <div className={css.component}>

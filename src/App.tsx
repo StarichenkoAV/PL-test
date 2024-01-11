@@ -2,8 +2,8 @@ import React, { ReactNode, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { MainLayout } from "./components/layouts/MainLayout";
 import "./App.module.scss";
-import {getAllItems} from "./store/mainSlice"
 import { useAppDispatch } from "./store";
+import { mainCollectionActions } from "./store/mainSlice";
 
 const HomePage = React.lazy(() =>
   import("./components/pages/HomePage").then(({ HomePage }) => ({
@@ -31,20 +31,22 @@ const NotFoundPage = React.lazy(() =>
   }))
 );
 
-const getSuspense = (component: ReactNode) => {
-  return (
-    <Suspense fallback={<div>Идёт загрузка...</div>}>{component}</Suspense>
-  );
-};
-
 function App() {
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
+
+  const { startLoad } = mainCollectionActions
+
+  const getSuspense = (component: ReactNode) => {
+    return (
+      <Suspense fallback={<div>Идёт загрузка...</div>}>{component}</Suspense>
+    );
+  };
 
   useEffect(() => {
-     dispatch(getAllItems())
+    dispatch(startLoad())
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch])
 
   return (
     <Routes>
