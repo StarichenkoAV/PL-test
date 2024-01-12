@@ -10,6 +10,7 @@ import { DEFAULT_PAGINATION_LIMIT } from "../constants";
 
 const defaultState: IItemsCollectionState = {
   items: [],
+  itemsCount: 0,
   sort: {
     sortBy: ESortBy.TITLE,
     order: EOrder.ASC,
@@ -59,6 +60,12 @@ export const mainSlice = createSlice({
     ): void {
       state.items = action.payload;
     },
+    setItemsCount(
+      state: IItemsCollectionState,
+      action: PayloadAction<number>
+    ): void {
+      state.itemsCount = action.payload;
+    },
   },
 });
 
@@ -71,11 +78,23 @@ const {
   setSorting,
   setPageLimit,
   setCategory,
+  setItemsCount,
 } = mainSlice.actions;
 
-function* loadItemsRun() {
+function* getItemsLength() {
 
+  const { response, error } = yield call(Api.getItemsLength);
+  if (error) {
+    console.error(`Error: ${error}`);
+  } else if (response) {
+    yield put(setItemsCount(response));
+  }
+}
+
+function* loadItemsRun() {
   yield put(setIsLoading(true));
+
+  getItemsLength()
 
   const {
     limit,
@@ -91,7 +110,7 @@ function* loadItemsRun() {
     page,
     sortBy,
     order,
-    category
+    category,
   };
 
   const { response, error } = yield call(Api.getItems, params);
@@ -105,6 +124,8 @@ function* loadItemsRun() {
   yield put(stopLoad());
 }
 
+
+
 export function* mainCollectionSaga(): Generator {
   yield all([
     takeLatest(startLoad.type, loadItemsRun),
@@ -112,6 +133,7 @@ export function* mainCollectionSaga(): Generator {
     takeLatest(setPageLimit.type, loadItemsRun),
     takeLatest(setSorting.type, loadItemsRun),
     takeLatest(setCategory.type, loadItemsRun),
+    takeLatest(setItemsCount.type, loadItemsRun)
   ]);
 }
 

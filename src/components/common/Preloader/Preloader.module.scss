@@ -1,0 +1,43 @@
+.component {
+    // border: 1px solid #ccc;
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.isAbsolute {
+    height: 100%;
+    height: -webkit-fill-available;
+    position: absolute;
+    align-items: center;
+    z-index: 10;
+}
+
+.isFixed {
+    height: calc(100% - var(--veb-header-height));
+    top: var(--veb-header-height);
+    left: 0px;
+    position: fixed;
+    align-items: center;
+    z-index: 10;
+}
+
+.rotationAnimation {
+    animation-name: rotation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

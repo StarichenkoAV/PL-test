@@ -4,6 +4,7 @@ import { MainLayout } from "./components/layouts/MainLayout";
 import "./App.module.scss";
 import { useAppDispatch } from "./store";
 import { mainCollectionActions } from "./store/mainSlice";
+import { getItemsLength } from "./api/mainApi";
 
 const HomePage = React.lazy(() =>
   import("./components/pages/HomePage").then(({ HomePage }) => ({
@@ -53,7 +54,7 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route path="" element={getSuspense(<HomePage />)} />
         <Route path="/food" element={getSuspense(<FoodPage />)} />
-        <Route path="/clothes" element={getSuspense(<ClothesPage />)} />
+        <Route path="/clothing" element={getSuspense(<ClothesPage />)} />
         <Route path="/electronics" element={getSuspense(<ElectronicsPage />)} />
         <Route path="*" element={getSuspense(<NotFoundPage />)} />
       </Route>

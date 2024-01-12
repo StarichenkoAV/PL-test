@@ -3,6 +3,19 @@ import identity from "lodash/identity";
 import pickBy from "lodash/pickBy";
 import { endpoint } from "../constants";
 
+export const getItemsLength = async () => {
+  let response, error;
+
+  try {
+    const { data } = await axios.get(endpoint);
+    response = data.length;
+  } catch (err) {
+    error = err;
+  }
+
+  return { response, error };
+};
+
 export const getItems = async (params: any) => {
   let response, error;
 

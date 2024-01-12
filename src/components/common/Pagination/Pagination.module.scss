@@ -1,3 +1,32 @@
-.component {
-    
-}
+.root {
+    li {
+      display: inline-block;
+  
+      a {
+        text-align: center;
+        width: 45px;
+        line-height: 42px;
+        height: 45px;
+        border: 1px solid var(--color-grey);
+        margin-right: 10px;
+        cursor: pointer;
+        display: inline-block;
+        color: var(--color-grey);
+  
+        &:hover {
+          background-color: var(--color-grey-hover);
+          color: #fff;
+        }
+      }
+    }
+  
+    :global {
+      .selected {
+        a {
+          background-color: var(--color-grey-active);
+          color: #fff;
+        }
+      }
+    }
+  }
+  

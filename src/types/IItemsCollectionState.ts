@@ -12,4 +12,5 @@ export interface IItemsCollectionFilter {
 export interface IItemsCollectionState extends IItemsCollectionFilter {
     items: Array<IItem>,
     isLoading: boolean,
+    itemsCount: number,
 }
