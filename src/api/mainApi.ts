@@ -1,14 +1,26 @@
-const endpoint = "https://657eea0d9d10ccb465d57fa1.mockapi.io/items";
+import axios from "axios";
+import identity from "lodash/identity";
+import pickBy from "lodash/pickBy";
+import { endpoint } from "../constants";
 
-export const getAllItems = async () => {
+export const getItems = async (params: any) => {
   let response, error;
 
+  const { sortBy, category, page, order, limit } = params;
   try {
-    const data = await fetch(endpoint, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
+    const { data } = await axios.get(endpoint, {
+      params: pickBy(
+        {
+          category,
+          order,
+          sortBy,
+          page,
+          limit,
+        },
+        identity
+      ),
     });
-    response = await data.json();
+    response = data;
   } catch (err) {
     error = err;
   }

@@ -46,7 +46,7 @@ function App() {
   useEffect(() => {
     dispatch(startLoad())
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  }, [])
 
   return (
     <Routes>

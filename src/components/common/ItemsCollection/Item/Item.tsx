@@ -1,7 +1,7 @@
 import { FC } from "react";
 import css from "./Item.module.scss";
 import { IItem } from "../../../../types/IItem";
-import { ECategoty } from "../../../../types/ECategoty";
+import { ECategory } from "../../../../types/ECategory";
 import { Button } from "../../Button";
 
 interface IItemProps {

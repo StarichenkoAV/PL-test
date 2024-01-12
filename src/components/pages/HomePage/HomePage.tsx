@@ -1,12 +1,12 @@
 import { FC } from "react";
 import css from "./HomePage.module.scss";
-import { CollectionItems } from "../../common/CollectionItems";
+import { ItemsCollection } from "../../common/ItemsCollection";
 
 export const HomePage: FC = () => {
 
   return (
     <div className={css.component}>
-      <CollectionItems />
+      <ItemsCollection />
     </div>
   );
 };

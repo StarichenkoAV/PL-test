@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Item } from "./Item";
 
-import css from "./CollectionItems.module.scss";
+import css from "./ItemsCollection.module.scss";
 import { Pagination } from "../Pagination";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 
-export const CollectionItems: FC = () => {
+export const ItemsCollection: FC = () => {
 
 const items = useAppSelector(state => state.mainCollection.items)
 
