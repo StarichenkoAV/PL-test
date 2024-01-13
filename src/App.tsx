@@ -45,7 +45,7 @@ function App() {
 
   const getSuspense = (component: ReactNode) => {
     return (
-      <Suspense fallback={<div>Идёт загрузка...</div>}>{component}</Suspense>
+      <Suspense fallback={<Preloader />}>{component}</Suspense>
     );
   };
 

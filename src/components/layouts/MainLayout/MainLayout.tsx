@@ -21,6 +21,8 @@ export const MainLayout: FC = () => {
       {isShowCart && (
         <Sidebar>
           <Cart />
+
+
         </Sidebar>
       )}
       <div className={css.content}>
