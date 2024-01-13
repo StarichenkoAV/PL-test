@@ -1,0 +1,45 @@
+.component {
+  position: relative;
+  min-width: 200px;
+
+  label {
+    display: inline-block;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    margin-bottom: 8px;
+  }
+}
+
+:global {
+  .veb-react-select {
+    width: 100% !important;
+
+    .react-select__control {
+      box-shadow: none;
+      border-color: var(--color-grey-hover);
+
+      &--menu-is-open {
+        border-color: var(--color-grey-active) !important;
+
+        .react-select__dropdown-indicator {
+          transform: rotate(180deg);
+        }
+      }
+
+      &:hover {
+        border-color: var(--color-grey-hover);
+      }
+
+      .react-select__dropdown-indicator {
+        color: grey;
+        padding: 12px;
+      }
+    }
+
+    .react-select__menu-portal {
+      z-index: 10;
+    }
+  }
+}

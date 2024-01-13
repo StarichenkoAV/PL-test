@@ -1,17 +1,27 @@
-import { FC } from "react";
-import css from "./Sorting.module.scss";
+import { FC, useState } from "react";
 import { Button } from "../Button";
-import { useNavigate } from "react-router-dom";
-import { EOrder } from "../../../types/ESort";
+// import { useNavigate } from "react-router-dom";
+import { EOrder, ESortBy } from "../../../types/ESort";
 import { useDispatch } from "react-redux";
 import { mainCollectionActions } from "../../../store/mainSlice";
 import { ECategory } from "../../../types/ECategory";
+import { SelectReact } from "../SelectReact";
+
+import css from "./Sorting.module.scss";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { SortButton } from "../SortButton";
+import { Icon } from "../Icon";
 
 export const Sorting: FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  const currentSort = useAppSelector((state) => state.mainCollection.sortBy)
 
-  const { setCategory } = mainCollectionActions;
+  const [sortByValue, setSortByValue] = useState<string>(currentSort);
+  const [sortOrderValue, setSortOrderValue] = useState<string>("")
+
+  const { setCategory, setSortBy, setOrder } = mainCollectionActions;
 
   const tabs = [
     { path: "/", title: "Все товары", value: ECategory.ALL },
@@ -24,32 +34,65 @@ export const Sorting: FC = () => {
     },
   ];
 
-  const options = [
+  const orderOptions = [
     {
-      name: "Возрастанию",
+      label: "Возрастанию",
       value: EOrder.ASC,
     },
     {
-      name: "Убыванию",
+      label: "Убыванию",
       value: EOrder.DESC,
     },
   ];
 
-  const onChangeCategoty = (value: ECategory, path: string) => {
+  const sortOptions = [
+    {
+      label: "Цене",
+      value: ESortBy.PRICE,
+    },
+    {
+      label: "Алфавиту",
+      value: ESortBy.TITLE,
+    },
+  ];
+
+  const onChangeCategoty = (value: ECategory, path: string): void => {
     dispatch(setCategory(value));
     // navigate(path)
   };
 
+  const onChangeSortBy = (v: string): void => {
+    dispatch(setSortBy(v));
+    setSortByValue(v);
+  };
+
+  const onChangeOrder = (v: string): void => {
+    dispatch(setOrder(v));
+    setSortOrderValue(v);
+  }
+ 
   return (
     <div className={css.component}>
-      <div className={css.tabs}>
+      <nav className={css.tabs}>
         {tabs.map((tab) => (
-          <Button onClick={() => onChangeCategoty(tab.value, tab.path)}>
+          <Button
+            style={{ height: "50px", minWidth: "150px" }}
+            key={tab.value}
+            onClick={() => onChangeCategoty(tab.value, tab.path)}
+          >
             {tab.title}
           </Button>
         ))}
-      </div>
-      {/* <Select options={options} /> */}
+      </nav>
+      <SelectReact
+        value={sortByValue}
+        width="200px"
+        options={sortOptions}
+        onChange={onChangeSortBy}
+        label="Cортировать по"
+      />
+      {/* <Icon name="arrow-down" />
+      <SortButton isDesc onClick={() => {}} /> */}
     </div>
   );
 };

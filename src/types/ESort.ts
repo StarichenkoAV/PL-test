@@ -7,8 +7,3 @@ export enum ESortBy {
     PRICE = "price",
     TITLE = "title",
 }
-
-export interface ISort {
-    sortBy: ESortBy;
-    order: EOrder;
-}

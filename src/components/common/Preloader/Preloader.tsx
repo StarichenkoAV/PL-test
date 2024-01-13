@@ -2,7 +2,7 @@ import React, { CSSProperties, FC } from "react";
 import cn from "classnames";
 
 import css from "./Preloader.module.scss";
-import IconsSvg from "../../../assets/img/icons.svg";
+import IconsSvg from "../../../assets/icons.svg";
 
 interface PreloaderProps {
   iconSize?: string;

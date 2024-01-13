@@ -3,7 +3,7 @@ import * as Api from "../api/mainApi";
 import { IItemsCollectionState } from "../types/IItemsCollectionState";
 import { IItem } from "../types/IItem";
 import { call, put, takeLatest, all, select } from "redux-saga/effects";
-import { EOrder, ESortBy, ISort } from "../types/ESort";
+import { EOrder, ESortBy } from "../types/ESort";
 import { ECategory } from "../types/ECategory";
 import { StoreStateType } from ".";
 import { DEFAULT_PAGINATION_LIMIT } from "../constants";
@@ -11,10 +11,8 @@ import { DEFAULT_PAGINATION_LIMIT } from "../constants";
 const defaultState: IItemsCollectionState = {
   items: [],
   itemsCount: 0,
-  sort: {
-    sortBy: ESortBy.TITLE,
-    order: EOrder.ASC,
-  },
+  sortBy: ESortBy.TITLE,
+  order: EOrder.ASC,
   category: ECategory.ALL,
   page: 1,
   limit: DEFAULT_PAGINATION_LIMIT,
@@ -43,10 +41,11 @@ export const mainSlice = createSlice({
     setPageLimit(state: IItemsCollectionState, action: PayloadAction<number>) {
       state.limit = action.payload;
     },
-    setSorting(state: IItemsCollectionState, action: PayloadAction<ISort>) {
-      const { sortBy, order } = action.payload;
-      state.sort.order = order;
-      state.sort.sortBy = sortBy;
+    setSortBy(state: IItemsCollectionState, action: PayloadAction<string>) {
+      state.sortBy = action.payload;
+    },
+    setOrder(state: IItemsCollectionState, action: PayloadAction<string>) {
+      state.order = action.payload;
     },
     setCategory(
       state: IItemsCollectionState,
@@ -75,16 +74,17 @@ const {
   startLoad,
   stopLoad,
   setPage,
-  setSorting,
+  setSortBy,
   setPageLimit,
   setCategory,
   setItemsCount,
+  setOrder,
 } = mainSlice.actions;
 
 function* getItemsLength() {
-
   const { response, error } = yield call(Api.getItemsLength);
   if (error) {
+    alert(`Error: ${error}`);
     console.error(`Error: ${error}`);
   } else if (response) {
     yield put(setItemsCount(response));
@@ -94,12 +94,13 @@ function* getItemsLength() {
 function* loadItemsRun() {
   yield put(setIsLoading(true));
 
-  getItemsLength()
+  // getItemsLength()
 
   const {
     limit,
     page,
-    sort: { sortBy, order },
+    sortBy,
+    order,
     category,
   }: IItemsCollectionState = yield select(
     (state: StoreStateType) => state.mainCollection
@@ -116,6 +117,7 @@ function* loadItemsRun() {
   const { response, error } = yield call(Api.getItems, params);
   // const { response, error }: IApiResponse<Array<IItem>> = yield getAllItems()
   if (error) {
+    alert(`Error: ${error}`);
     console.error(`Error: ${error}`);
   } else if (response) {
     yield put(loadItems(response));
@@ -124,16 +126,15 @@ function* loadItemsRun() {
   yield put(stopLoad());
 }
 
-
-
 export function* mainCollectionSaga(): Generator {
   yield all([
     takeLatest(startLoad.type, loadItemsRun),
     takeLatest(setPage.type, loadItemsRun),
     takeLatest(setPageLimit.type, loadItemsRun),
-    takeLatest(setSorting.type, loadItemsRun),
+    takeLatest(setSortBy.type, loadItemsRun),
     takeLatest(setCategory.type, loadItemsRun),
-    takeLatest(setItemsCount.type, loadItemsRun)
+    takeLatest(setItemsCount.type, loadItemsRun),
+    takeLatest(setOrder.type, loadItemsRun),
   ]);
 }
 
