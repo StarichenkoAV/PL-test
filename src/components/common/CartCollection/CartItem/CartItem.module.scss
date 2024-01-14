@@ -1,0 +1,16 @@
+.component {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 50px minmax(70px, 300px) 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  min-height: 40px;
+  width: 100%;
+  border: 1px solid var(--color-grey);
+  background-color: white;
+
+  p {
+    justify-self: flex-end;
+    font-size: 14px;
+  }
+}

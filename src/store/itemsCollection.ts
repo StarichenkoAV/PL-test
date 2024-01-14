@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import * as Api from "../api/mainApi";
-import { IItemsCollectionState } from "../types/IItemsCollectionState";
+import { IItemsCollectionFilter, IItemsCollectionState } from "../types/IItemsCollectionState";
 import { IItem } from "../types/IItem";
 import { call, put, takeLatest, all, select } from "redux-saga/effects";
 import { EOrder, ESortBy } from "../types/ESort";
@@ -19,7 +19,9 @@ const defaultState: IItemsCollectionState = {
   isLoading: false,
 };
 
-export const mainSlice = createSlice({
+
+
+export const itemsCollectionSlice = createSlice({
   name: "items",
   initialState: defaultState,
   reducers: {
@@ -79,22 +81,10 @@ const {
   setCategory,
   setItemsCount,
   setOrder,
-} = mainSlice.actions;
-
-function* getItemsLength() {
-  const { response, error } = yield call(Api.getItemsLength);
-  if (error) {
-    alert(`Error: ${error}`);
-    console.error(`Error: ${error}`);
-  } else if (response) {
-    yield put(setItemsCount(response));
-  }
-}
+} = itemsCollectionSlice.actions;
 
 function* loadItemsRun() {
   yield put(setIsLoading(true));
-
-  // getItemsLength()
 
   const {
     limit,
@@ -103,10 +93,10 @@ function* loadItemsRun() {
     order,
     category,
   }: IItemsCollectionState = yield select(
-    (state: StoreStateType) => state.mainCollection
+    (state: StoreStateType) => state.itemsCollection
   );
 
-  const params = {
+  const params: IItemsCollectionFilter = {
     limit,
     page,
     sortBy,
@@ -115,7 +105,6 @@ function* loadItemsRun() {
   };
 
   const { response, error } = yield call(Api.getItems, params);
-  // const { response, error }: IApiResponse<Array<IItem>> = yield getAllItems()
   if (error) {
     alert(`Error: ${error}`);
     console.error(`Error: ${error}`);
@@ -126,7 +115,7 @@ function* loadItemsRun() {
   yield put(stopLoad());
 }
 
-export function* mainCollectionSaga(): Generator {
+export function* itemsCollectionSaga(): Generator {
   yield all([
     takeLatest(startLoad.type, loadItemsRun),
     takeLatest(setPage.type, loadItemsRun),
@@ -138,6 +127,6 @@ export function* mainCollectionSaga(): Generator {
   ]);
 }
 
-export const mainCollectionActions = mainSlice.actions;
+export const itemsCollectionActions = itemsCollectionSlice.actions;
 
-export const mainCollection = mainSlice.reducer;
+export const itemsCollection = itemsCollectionSlice.reducer;

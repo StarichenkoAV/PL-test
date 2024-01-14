@@ -14,6 +14,7 @@ export const Button: FC<IButtonProp> = ({
 }) => {
   return (
     <button
+      
       style={style}
       onClick={(event) => {
         event.preventDefault();

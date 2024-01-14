@@ -2,7 +2,7 @@ import React, { ReactNode, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { MainLayout } from "./components/layouts/MainLayout";
 import { useAppDispatch } from "./store";
-import { mainCollectionActions } from "./store/mainSlice";
+import { itemsCollectionActions } from "./store/itemsCollection";
 import "./App.module.scss";
 import { Preloader } from "./components/common/Preloader";
 
@@ -36,7 +36,7 @@ function App() {
 
   const dispatch = useAppDispatch()
 
-  const { startLoad } = mainCollectionActions
+  const { startLoad } = itemsCollectionActions
 
   useEffect(() => {
     dispatch(startLoad())

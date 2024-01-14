@@ -1,20 +1,28 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import createSagaMiddleware from "redux-saga";
-import { mainCollection, mainCollectionSaga } from "./mainSlice";
-import { cartCollection } from "./cartSlice";
+import { itemsCollection, itemsCollectionSaga } from "./itemsCollection";
+import { cartCollection, cartCollectionSaga } from "./cartCollection";
+import { all } from "redux-saga/effects";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
-    mainCollection,
+    itemsCollection,
     cartCollection,
   },
   middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), sagaMiddleware],
 });
 
-sagaMiddleware.run(mainCollectionSaga);
+export function* rootSaga(): Generator {
+	yield all([
+    itemsCollectionSaga(),
+    cartCollectionSaga(),
+	]);
+}
+
+sagaMiddleware.run(itemsCollectionSaga);
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;

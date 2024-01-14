@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button } from "../Button";
 // import { useNavigate } from "react-router-dom";
 import { EOrder, ESortBy } from "../../../types/ESort";
 import { useDispatch } from "react-redux";
-import { mainCollectionActions } from "../../../store/mainSlice";
+import { itemsCollectionActions } from "../../../store/itemsCollection";
 import { ECategory } from "../../../types/ECategory";
 import { SelectReact } from "../SelectReact";
 
@@ -16,12 +16,12 @@ export const Sorting: FC = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  const currentSort = useAppSelector((state) => state.mainCollection.sortBy)
+  const currentSort = useAppSelector((state) => state.itemsCollection.sortBy)
 
   const [sortByValue, setSortByValue] = useState<string>(currentSort);
   const [sortOrderValue, setSortOrderValue] = useState<string>("")
 
-  const { setCategory, setSortBy, setOrder } = mainCollectionActions;
+  const { setCategory, setSortBy, setOrder } = itemsCollectionActions;
 
   const tabs = [
     { path: "/", title: "Все товары", value: ECategory.ALL },
@@ -61,14 +61,19 @@ export const Sorting: FC = () => {
     // navigate(path)
   };
 
-  const onChangeSortBy = (v: string): void => {
-    dispatch(setSortBy(v));
+  const onChangeSortBy = (v: any): void => {
     setSortByValue(v);
+    dispatch(setSortBy(v.value));
+    console.log(v);
   };
 
-  const onChangeOrder = (v: string): void => {
-    dispatch(setOrder(v));
+  useEffect(() => {
+    
+  }, [])
+
+  const onChangeOrder = (v: any): void => {
     setSortOrderValue(v);
+    dispatch(setOrder(v.value));
   }
  
   return (
@@ -88,7 +93,7 @@ export const Sorting: FC = () => {
         value={sortByValue}
         width="200px"
         options={sortOptions}
-        onChange={onChangeSortBy}
+        onChange={(v) => setSortByValue(v)}
         label="Cортировать по"
       />
       {/* <Icon name="arrow-down" />

@@ -11,6 +11,9 @@
         <symbol id="chevron-down" viewBox="0 0 12 7">
         <path stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" d="M11 1L9.25269 2.76297C7.85925 4.1689 7.16253 4.87187 6.31333 4.98011C6.10527 5.00663 5.89473 5.00663 5.68667 4.98011C4.83748 4.87187 4.14075 4.1689 2.74731 2.76297L1 1"/>
     </symbol>
+        <symbol id="close" viewBox="0 0 16 16" fill="none">
+        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M3.33301 3.33334L12.6663 12.6667M3.33303 12.6667L7.99969 8L12.6664 3.33333"/>
+    </symbol>
 
     <symbol id="cart" viewBox="0 0 20 20">
         <path

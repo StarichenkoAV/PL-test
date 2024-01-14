@@ -4,14 +4,14 @@ import { Sidebar } from "../SideBar";
 import { Outlet } from "react-router-dom";
 
 import css from "./MainLayout.module.scss";
-import { Cart } from "../../common/Cart";
+import { CartsCollection } from "../../common/CartCollection";
 
 export const MainLayout: FC = () => {
   const [isShowCart, setIsShowCart] = useState<boolean>(false);
 
   const onShowCard = (): void => {
-    setIsShowCart((prev) => !prev)
-  }
+    setIsShowCart((prev) => !prev);
+  };
 
   /* завязать ширину контента на переменную isShowCart (открытый сайдбар) */
 
@@ -20,9 +20,7 @@ export const MainLayout: FC = () => {
       <Header onShowCard={onShowCard} />
       {isShowCart && (
         <Sidebar>
-          <Cart />
-
-
+          <CartsCollection />
         </Sidebar>
       )}
       <div className={css.content}>

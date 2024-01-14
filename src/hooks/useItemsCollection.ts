@@ -3,7 +3,7 @@ import { endpoint } from "../constants";
 import { useCallback, useEffect, useState } from "react";
 import { useAppSelector } from "./useAppSelector";
 import { useDispatch } from "react-redux";
-import { mainCollectionActions } from "../store/mainSlice";
+import { itemsCollectionActions } from "../store/itemsCollection";
 
 export interface IuseItemsCollectionResult {
   countItems: number;
@@ -13,12 +13,12 @@ export interface IuseItemsCollectionResult {
 
 export const useItemsCollection = (): IuseItemsCollectionResult => {
   const [countItems, setCountItems] = useState<number>(0);
-  const category = useAppSelector((state) => state.mainCollection.category);
-  const currentPage = useAppSelector((state) => state.mainCollection.page);
+  const category = useAppSelector((state) => state.itemsCollection.category);
+  const currentPage = useAppSelector((state) => state.itemsCollection.page);
 
   const dispatch = useDispatch()
 
-  const { setPage } = mainCollectionActions;   
+  const { setPage } = itemsCollectionActions;   
 
   const getItemsLength = useCallback(async () => {
     let response, error;
