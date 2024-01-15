@@ -57,6 +57,11 @@ export const itemsCollectionSlice = createSlice({
     ): void {
       state.items = action.payload;
     },
+    clearFilters(state: IItemsCollectionState) {
+      const { order, sortBy  } = defaultState
+      state.sortBy = sortBy;
+      state.order = order;
+    },
   },
 });
 
@@ -70,6 +75,7 @@ const {
   setPageLimit,
   setCategory,
   setOrder,
+  clearFilters,
 } = itemsCollectionSlice.actions;
 
 function* loadItemsRun() {
@@ -112,6 +118,7 @@ export function* itemsCollectionSaga(): Generator {
     takeLatest(setSortBy.type, loadItemsRun),
     takeLatest(setCategory.type, loadItemsRun),
     takeLatest(setOrder.type, loadItemsRun),
+    takeLatest(clearFilters.type, loadItemsRun),
   ]);
 }
 

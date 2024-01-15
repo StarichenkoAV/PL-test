@@ -21,7 +21,7 @@ export const Sorting: FC = () => {
   const [sortOrderValue, setSortOrderValue] = useState<string>(currentOrder);
   const [isDesc, setIsDesc] = useState<boolean>(sortOrderValue === EOrder.DESC)
 
-  const { setCategory, setSortBy, setOrder, setPage } = itemsCollectionActions;
+  const { setCategory, setSortBy, setOrder, setPage, clearFilters } = itemsCollectionActions;
 
   const tabs = [
     { path: "/", title: "Все товары", value: ECategory.ALL },
@@ -59,11 +59,15 @@ export const Sorting: FC = () => {
     setSortByValue(v.value) 
   };
 
-  const onChangeOrder = () => {
+  const onChangeOrder = (): void => {
     const changedOrder = sortOrderValue === EOrder.DESC ? EOrder.ASC : EOrder.DESC
     setIsDesc((prev) => !prev)
     setSortOrderValue(changedOrder);
     dispatch(setOrder(changedOrder));
+  }
+
+  const onClearFilters = (): void => {
+      dispatch(clearFilters())
   }
 
   return (
@@ -90,6 +94,7 @@ export const Sorting: FC = () => {
         <div onClick={onChangeOrder} title={isDesc ? "По убыванию" : "По возрастанию"}  className= {cn(css.orderIcon, { [css.isDesc]: isDesc })}>
           <Icon width="30px" height="30px" name="icon-up" />
         </div>
+        <Button onClick={onClearFilters}>Сбросить фильтры</Button>
       </div>
     </div>
   );
