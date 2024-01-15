@@ -1,7 +1,6 @@
 import { FC } from "react";
 import css from "./Pagination.module.scss";
 import ReactPaginate from "react-paginate";
-import { useItemsCollection } from "../../../hooks/useItemsCollection";
 
 interface IPaginationProps {
   currentPage: number;

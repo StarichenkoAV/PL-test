@@ -40,9 +40,9 @@ interface IItemProps {
       <span className={css.title}>{title}</span>
       <div className={css.bottomBlock}>
         <span className={css.price}>{price} P.</span>
-        <Button onClick={onAddItemCart}>+</Button>
+        <Button style={{width:"40px"}} title="Добавить в корзину" onClick={onAddItemCart}>+</Button>
         {addedCount ? addedCount : 0}
-        <Button onClick={onRemoveItemCart}>-</Button>
+        <Button style={{width:"40px"}} title="Удалить из корзины" onClick={onRemoveItemCart}>-</Button>
       </div>
     </div>
   );

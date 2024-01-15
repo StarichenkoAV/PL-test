@@ -10,7 +10,6 @@ import { DEFAULT_PAGINATION_LIMIT } from "../constants";
 
 const defaultState: IItemsCollectionState = {
   items: [],
-  itemsCount: 0,
   sortBy: ESortBy.TITLE,
   order: EOrder.ASC,
   category: ECategory.ALL,
@@ -18,8 +17,6 @@ const defaultState: IItemsCollectionState = {
   limit: DEFAULT_PAGINATION_LIMIT,
   isLoading: false,
 };
-
-
 
 export const itemsCollectionSlice = createSlice({
   name: "items",
@@ -61,12 +58,6 @@ export const itemsCollectionSlice = createSlice({
     ): void {
       state.items = action.payload;
     },
-    setItemsCount(
-      state: IItemsCollectionState,
-      action: PayloadAction<number>
-    ): void {
-      state.itemsCount = action.payload;
-    },
   },
 });
 
@@ -79,7 +70,6 @@ const {
   setSortBy,
   setPageLimit,
   setCategory,
-  setItemsCount,
   setOrder,
 } = itemsCollectionSlice.actions;
 
@@ -102,8 +92,8 @@ function* loadItemsRun() {
     sortBy,
     order,
     category,
-  };
-
+  };    
+  
   const { response, error } = yield call(Api.getItems, params);
   if (error) {
     alert(`Error: ${error}`);
@@ -122,7 +112,6 @@ export function* itemsCollectionSaga(): Generator {
     takeLatest(setPageLimit.type, loadItemsRun),
     takeLatest(setSortBy.type, loadItemsRun),
     takeLatest(setCategory.type, loadItemsRun),
-    takeLatest(setItemsCount.type, loadItemsRun),
     takeLatest(setOrder.type, loadItemsRun),
   ]);
 }

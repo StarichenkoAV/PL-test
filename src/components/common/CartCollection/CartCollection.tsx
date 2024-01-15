@@ -38,7 +38,7 @@ export const CartsCollection: FC = () => {
       {!isShowCardItems && (
         <div className={css.bottomBlock}>
           <p>{totallPriceTitle}</p>
-          <Button onClick={onClearCart} title="очистить корзину">
+          <Button style={{width:"80%"}}  onClick={onClearCart} title="очистить корзину">
             Очистить корзину
           </Button>
         </div>

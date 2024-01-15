@@ -2,8 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { itemsCollection, itemsCollectionSaga } from "./itemsCollection";
-import { cartCollection, cartCollectionSaga } from "./cartCollection";
-import { all } from "redux-saga/effects";
+import { cartCollection } from "./cartCollection";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,13 +13,6 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), sagaMiddleware],
 });
-
-export function* rootSaga(): Generator {
-	yield all([
-    itemsCollectionSaga(),
-    cartCollectionSaga(),
-	]);
-}
 
 sagaMiddleware.run(itemsCollectionSaga);
 

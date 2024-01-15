@@ -16,6 +16,10 @@
   .veb-react-select {
     width: 100% !important;
 
+    .react-select__option {
+      font-size: 14px;
+    }
+
     .react-select__control {
       box-shadow: none;
       border-color: var(--color-grey-hover);

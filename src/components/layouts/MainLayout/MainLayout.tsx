@@ -13,8 +13,6 @@ export const MainLayout: FC = () => {
     setIsShowCart((prev) => !prev);
   };
 
-  /* завязать ширину контента на переменную isShowCart (открытый сайдбар) */
-
   return (
     <div className={css.component}>
       <Header onShowCard={onShowCard} />

@@ -1,8 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ICartCollectionState } from "../types/ICartCollectionState";
 import { ICartItem } from "../types/ICartItem";
-import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import { StoreStateType } from ".";
 import { calcTotalPrice } from "../utils/calcTotalPrice";
 
 export const defaultState: ICartCollectionState = {
@@ -10,24 +8,9 @@ export const defaultState: ICartCollectionState = {
   cartItems: [],
 };
 
-const getCartFromLocalStorage = (): ICartCollectionState => {
-  const cartJson = localStorage.getItem("cart");
-  const cartItems: Array<ICartItem> = cartJson ? JSON.parse(cartJson) : [];
-  const totalPrice = cartItems.reduce((sum, i) => i.price * i.count + sum, 0);
-
-  const currentCart = {
-    totalPrice,
-    cartItems,
-  };
-
-  return currentCart;
-};
-
-const initialState = getCartFromLocalStorage();
-
 export const cartCollectionSlice = createSlice({
   name: "cart",
-  initialState: initialState,
+  initialState: defaultState,
   reducers: {
     addCartItem(
       state: ICartCollectionState,
@@ -55,6 +38,9 @@ export const cartCollectionSlice = createSlice({
       } else if (item && item.count === 1) {
         state.cartItems = cartItems.filter((i) => i.id !== item.id);
       }
+
+      state.totalPrice = calcTotalPrice(state.cartItems)
+
     },
     removeCartPosition(
       state: ICartCollectionState,
@@ -63,6 +49,8 @@ export const cartCollectionSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (i) => i.id !== action.payload.id
       );
+
+      state.totalPrice = calcTotalPrice(state.cartItems)
     },
     clearCart(state: ICartCollectionState) {
       state.cartItems = []
@@ -70,35 +58,6 @@ export const cartCollectionSlice = createSlice({
     },
   },
 });
-
-// function* setLS() {
-//   yield console.log("Я РАБОТАЮ");
-//   // localStorage.setItem("cart", JSON.stringify(items));
-// };
-
-// const { removeCartItem, removeCartPosition, addCartItem, clearCart } =
-//   cartCollectionSlice.actions;
-
-// function* loadCartLocalStorage() {
-//   const cartItems: Array<ICartItem> = yield select(
-//     (state: StoreStateType) => state.cartCollection
-//   );
-
-//   return put(setLS)
-// }
-
-// export const calcTotalPrice = (items: any) => {
-//   return items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
-// };
-
-export function* cartCollectionSaga(): Generator {
-  yield all([
-    // takeLatest(addCartItem.type, loadCartLocalStorage),
-    // takeLatest(removeCartItem.type, loadCartLocalStorage),
-    // takeLatest(removeCartPosition.type, loadCartLocalStorage),
-    // takeLatest(clearCart.type, loadCartLocalStorage),
-  ]);
-}
 
 export const cartCollectionActions = cartCollectionSlice.actions;
 

@@ -1,5 +1,4 @@
-import React, { CSSProperties, FC } from "react";
-import cn from "classnames";
+import { CSSProperties, FC } from "react";
 
 import css from "./Preloader.module.scss";
 import IconsSvg from "../../../assets/icons.svg";
@@ -7,8 +6,6 @@ import IconsSvg from "../../../assets/icons.svg";
 interface PreloaderProps {
   iconSize?: string;
   size?: string;
-  isAbsolute?: boolean;
-  isFixed?: boolean;
   stroke?: string;
   fill?: string;
   style?: CSSProperties;
@@ -17,8 +14,6 @@ interface PreloaderProps {
 export const Preloader: FC<PreloaderProps> = ({
   iconSize = `51px`,
   size,
-  isAbsolute = false,
-  isFixed = false,
   stroke = `#bbb`,
   fill = `transparent`,
   style = {},
@@ -31,11 +26,7 @@ export const Preloader: FC<PreloaderProps> = ({
 
   return (
     <div
-      className={cn(css.component, {
-        [css.isAbsolute]: isAbsolute,
-        [css.isFixed]: isFixed,
-      })}
-      style={{ color: `var(--veb-color-brand-disable)`, ...style }}
+      className={css.component}
     >
       <svg
         className={css.rotationAnimation}

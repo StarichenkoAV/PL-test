@@ -1,27 +1,27 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "../Button";
-// import { useNavigate } from "react-router-dom";
 import { EOrder, ESortBy } from "../../../types/ESort";
 import { useDispatch } from "react-redux";
 import { itemsCollectionActions } from "../../../store/itemsCollection";
 import { ECategory } from "../../../types/ECategory";
 import { SelectReact } from "../SelectReact";
-
-import css from "./Sorting.module.scss";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { SortButton } from "../SortButton";
 import { Icon } from "../Icon";
 
+import css from "./Sorting.module.scss";
+import cn from "classnames";
+
 export const Sorting: FC = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const currentSort = useAppSelector((state) => state.itemsCollection.sortBy)
+
+  const currentSort = useAppSelector((state) => state.itemsCollection.sortBy);
+  const currentOrder = useAppSelector((state) => state.itemsCollection.order)
 
   const [sortByValue, setSortByValue] = useState<string>(currentSort);
-  const [sortOrderValue, setSortOrderValue] = useState<string>("")
+  const [sortOrderValue, setSortOrderValue] = useState<string>(currentOrder);
+  const [isDesc, setIsDesc] = useState<boolean>(sortOrderValue === EOrder.DESC)
 
-  const { setCategory, setSortBy, setOrder } = itemsCollectionActions;
+  const { setCategory, setSortBy, setOrder, setPage } = itemsCollectionActions;
 
   const tabs = [
     { path: "/", title: "Все товары", value: ECategory.ALL },
@@ -31,17 +31,6 @@ export const Sorting: FC = () => {
       path: "/electronics",
       title: "Электроника",
       value: ECategory.ELECTRONICS,
-    },
-  ];
-
-  const orderOptions = [
-    {
-      label: "Возрастанию",
-      value: EOrder.ASC,
-    },
-    {
-      label: "Убыванию",
-      value: EOrder.DESC,
     },
   ];
 
@@ -58,24 +47,22 @@ export const Sorting: FC = () => {
 
   const onChangeCategoty = (value: ECategory, path: string): void => {
     dispatch(setCategory(value));
-    // navigate(path)
+    dispatch(setPage(1));
   };
 
   const onChangeSortBy = (v: any): void => {
     setSortByValue(v);
     dispatch(setSortBy(v.value));
-    console.log(v);
   };
 
-  useEffect(() => {
-    
-  }, [])
 
-  const onChangeOrder = (v: any): void => {
-    setSortOrderValue(v);
-    dispatch(setOrder(v.value));
+  const onChangeOrder = () => {
+    const changedOrder = sortOrderValue === EOrder.DESC ? EOrder.ASC : EOrder.DESC
+    setIsDesc((prev) => !prev)
+    setSortOrderValue(changedOrder);
+    dispatch(setOrder(changedOrder));
   }
- 
+
   return (
     <div className={css.component}>
       <nav className={css.tabs}>
@@ -89,15 +76,18 @@ export const Sorting: FC = () => {
           </Button>
         ))}
       </nav>
-      <SelectReact
-        value={sortByValue}
-        width="200px"
-        options={sortOptions}
-        onChange={(v) => setSortByValue(v)}
-        label="Cортировать по"
-      />
-      {/* <Icon name="arrow-down" />
-      <SortButton isDesc onClick={() => {}} /> */}
+      <div className={css.sortBlock}>
+        <SelectReact
+          value={sortByValue}
+          width="200px"
+          options={sortOptions}
+          onChange={(v) => onChangeSortBy(v)}
+          label="Cортировать по"
+        />
+        <div onClick={onChangeOrder} title={isDesc ? "По убыванию" : "По возрастанию"}  className= {cn(css.orderIcon, { [css.isDesc]: isDesc })}>
+          <Icon width="30px" height="30px" name="icon-up" />
+        </div>
+      </div>
     </div>
   );
 };

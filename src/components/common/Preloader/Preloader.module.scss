@@ -8,23 +8,6 @@
     background-color: white;
 }
 
-.isAbsolute {
-    height: 100%;
-    height: -webkit-fill-available;
-    position: absolute;
-    align-items: center;
-    z-index: 10;
-}
-
-.isFixed {
-    height: calc(100% - var(--veb-header-height));
-    top: var(--veb-header-height);
-    left: 0px;
-    position: fixed;
-    align-items: center;
-    z-index: 10;
-}
-
 .rotationAnimation {
     animation-name: rotation;
     animation-duration: 2s;

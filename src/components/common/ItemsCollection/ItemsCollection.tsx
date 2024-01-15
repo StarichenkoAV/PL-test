@@ -2,11 +2,11 @@ import { FC } from "react";
 import { Item } from "./Item";
 import { Sorting } from "../Sorting";
 import { Pagination } from "../Pagination";
+import { Preloader } from "../Preloader";
 import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useItemsCollection } from "../../../hooks/useItemsCollection";
 
 import css from "./ItemsCollection.module.scss";
-import { Preloader } from "../Preloader";
-import { useItemsCollection } from "../../../hooks/useItemsCollection";
 
 export const ItemsCollection: FC = () => {
 

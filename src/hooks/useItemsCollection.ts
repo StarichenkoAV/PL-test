@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useAppSelector } from "./useAppSelector";
 import { useDispatch } from "react-redux";
 import { itemsCollectionActions } from "../store/itemsCollection";
-
 export interface IuseItemsCollectionResult {
   countItems: number;
   onChangePage: (currentPage: number) => void;
@@ -21,21 +20,18 @@ export const useItemsCollection = (): IuseItemsCollectionResult => {
   const { setPage } = itemsCollectionActions;   
 
   const getItemsLength = useCallback(async () => {
-    let response, error;
-
     try {
       const { data } = await axios.get(endpoint, {
         params: {
           category,
         },
       });
-      response = data.length;
-      setCountItems(response);
+      setCountItems(data.length);
     } catch (err) {
-      error = err;
+      alert(`Error: ${err}`)
+      console.error(`Error: ${err}`)
     }
 
-    return { response, error };
   }, [category]);
 
   const onChangePage = (currentPage: number) => {
