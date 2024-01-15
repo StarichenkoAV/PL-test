@@ -3,15 +3,14 @@ import * as Api from "../api/mainApi";
 import { IItemsCollectionFilter, IItemsCollectionState } from "../types/IItemsCollectionState";
 import { IItem } from "../types/IItem";
 import { call, put, takeLatest, all, select } from "redux-saga/effects";
-import { EOrder, ESortBy } from "../types/ESort";
 import { ECategory } from "../types/ECategory";
 import { StoreStateType } from ".";
 import { DEFAULT_PAGINATION_LIMIT } from "../constants";
 
 const defaultState: IItemsCollectionState = {
   items: [],
-  sortBy: ESortBy.TITLE,
-  order: EOrder.ASC,
+  sortBy: "",
+  order: "",
   category: ECategory.ALL,
   page: 1,
   limit: DEFAULT_PAGINATION_LIMIT,
@@ -34,22 +33,22 @@ export const itemsCollectionSlice = createSlice({
     stopLoad(state: IItemsCollectionState): void {
       state.isLoading = false;
     },
-    setPage(state: IItemsCollectionState, action: PayloadAction<number>) {
+    setPage(state: IItemsCollectionState, action: PayloadAction<number>):void {
       state.page = action.payload;
     },
-    setPageLimit(state: IItemsCollectionState, action: PayloadAction<number>) {
+    setPageLimit(state: IItemsCollectionState, action: PayloadAction<number>):void {
       state.limit = action.payload;
     },
-    setSortBy(state: IItemsCollectionState, action: PayloadAction<string>) {
+    setSortBy(state: IItemsCollectionState, action: PayloadAction<string>):void {
       state.sortBy = action.payload;
     },
-    setOrder(state: IItemsCollectionState, action: PayloadAction<string>) {
+    setOrder(state: IItemsCollectionState, action: PayloadAction<string>):void {
       state.order = action.payload;
     },
     setCategory(
       state: IItemsCollectionState,
       action: PayloadAction<ECategory>
-    ) {
+    ):void {
       state.category = action.payload;
     },
     loadItems(

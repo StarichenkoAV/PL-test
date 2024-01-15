@@ -15,7 +15,7 @@ export const Sorting: FC = () => {
   const dispatch = useDispatch();
 
   const currentSort = useAppSelector((state) => state.itemsCollection.sortBy);
-  const currentOrder = useAppSelector((state) => state.itemsCollection.order)
+  const currentOrder = useAppSelector((state) => state.itemsCollection.order);
 
   const [sortByValue, setSortByValue] = useState<string>(currentSort);
   const [sortOrderValue, setSortOrderValue] = useState<string>(currentOrder);
@@ -50,11 +50,14 @@ export const Sorting: FC = () => {
     dispatch(setPage(1));
   };
 
-  const onChangeSortBy = (v: any): void => {
-    setSortByValue(v);
-    dispatch(setSortBy(v.value));
-  };
+  const valueSortForSelect = sortOptions.find(
+    (o) => o.value === sortByValue
+  )
 
+  const onChangeSortBy = (v: any): void => {
+    dispatch(setSortBy(v.value)); 
+    setSortByValue(v.value) 
+  };
 
   const onChangeOrder = () => {
     const changedOrder = sortOrderValue === EOrder.DESC ? EOrder.ASC : EOrder.DESC
@@ -78,7 +81,7 @@ export const Sorting: FC = () => {
       </nav>
       <div className={css.sortBlock}>
         <SelectReact
-          value={sortByValue}
+          value={valueSortForSelect}
           width="200px"
           options={sortOptions}
           onChange={(v) => onChangeSortBy(v)}

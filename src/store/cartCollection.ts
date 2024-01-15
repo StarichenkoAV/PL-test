@@ -25,7 +25,7 @@ export const cartCollectionSlice = createSlice({
             count: 1,
           });
 
-          state.totalPrice = calcTotalPrice(state.cartItems)
+      state.totalPrice = calcTotalPrice(state.cartItems);
     },
     removeCartItem(
       state: ICartCollectionState,
@@ -39,8 +39,7 @@ export const cartCollectionSlice = createSlice({
         state.cartItems = cartItems.filter((i) => i.id !== item.id);
       }
 
-      state.totalPrice = calcTotalPrice(state.cartItems)
-
+      state.totalPrice = calcTotalPrice(state.cartItems);
     },
     removeCartPosition(
       state: ICartCollectionState,
@@ -50,10 +49,10 @@ export const cartCollectionSlice = createSlice({
         (i) => i.id !== action.payload.id
       );
 
-      state.totalPrice = calcTotalPrice(state.cartItems)
+      state.totalPrice = calcTotalPrice(state.cartItems);
     },
     clearCart(state: ICartCollectionState) {
-      state.cartItems = []
+      state.cartItems = [];
       state.totalPrice = 0;
     },
   },

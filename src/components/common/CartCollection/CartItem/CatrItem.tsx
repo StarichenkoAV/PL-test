@@ -30,7 +30,7 @@ export const CartItem: FC<ICartItemProps> = ({ cartItem, isCartHeadTitle = false
       <p style={{ justifySelf: "flex-start" }}>{itemName}</p>
       <p>{countTitle}</p>
       <p >{priceTitle}</p>
-      {!isCartHeadTitle && <div onClick={onDeletePosition} style={{cursor:"pointer"}} title="Удалить элемент из корзины">
+      {!isCartHeadTitle && <div onClick={onDeletePosition} style={{cursor:"pointer"}} title="Удалить товар из корзины">
         <Icon name="close" />
       </div>}
     </div>
