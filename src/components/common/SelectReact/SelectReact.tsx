@@ -10,7 +10,6 @@ export interface ISelectReactValue {
   value: number;
   label: string;
 }
-
 export interface ISelectReactOption {
   value: any;
   label: string;

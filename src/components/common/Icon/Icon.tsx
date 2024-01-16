@@ -1,7 +1,6 @@
 import { FC } from "react";
 
 import IconsSvg from "../../../assets/icons.svg";
-
 interface IIconProps {
   name: string;
   fill?: string;

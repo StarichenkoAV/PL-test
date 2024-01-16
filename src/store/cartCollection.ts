@@ -33,10 +33,11 @@ export const cartCollectionSlice = createSlice({
     ): void {
       const cartItems = state.cartItems;
       const item = cartItems.find((i) => i.id === action.payload.id);
+      const index = cartItems.findIndex((i) => i.id === action.payload.id);
       if (item && item.count > 1) {
         item.count -= 1;
       } else if (item && item.count === 1) {
-        state.cartItems = cartItems.filter((i) => i.id !== item.id);
+        cartItems.splice(index, 1);
       }
 
       state.totalPrice = calcTotalPrice(state.cartItems);
@@ -45,9 +46,9 @@ export const cartCollectionSlice = createSlice({
       state: ICartCollectionState,
       action: PayloadAction<ICartItem>
     ): void {
-      state.cartItems = state.cartItems.filter(
-        (i) => i.id !== action.payload.id
-      );
+      const cartItems = state.cartItems;
+      const index = cartItems.findIndex((i) => i.id === action.payload.id);
+      cartItems.splice(index, 1);
 
       state.totalPrice = calcTotalPrice(state.cartItems);
     },

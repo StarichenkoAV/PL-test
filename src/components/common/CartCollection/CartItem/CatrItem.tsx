@@ -1,10 +1,9 @@
 import { FC } from "react";
-
-import css from "./CartItem.module.scss";
 import { ICartItem } from "../../../../types/ICartItem";
 import { Icon } from "../../Icon";
 import { cartCollectionActions } from "../../../../store/cartCollection";
 import { useAppDispatch } from "../../../../store";
+import css from "./CartItem.module.scss";
 
 export interface ICartItemProps {
   cartItem: ICartItem;

@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import * as Api from "../api/mainApi";
-import { IItemsCollectionFilter, IItemsCollectionState } from "../types/IItemsCollectionState";
+import {
+  IItemsCollectionFilter,
+  IItemsCollectionState,
+} from "../types/IItemsCollectionState";
 import { IItem } from "../types/IItem";
 import { call, put, takeLatest, all, select } from "redux-saga/effects";
 import { ECategory } from "../types/ECategory";
@@ -33,22 +36,31 @@ export const itemsCollectionSlice = createSlice({
     stopLoad(state: IItemsCollectionState): void {
       state.isLoading = false;
     },
-    setPage(state: IItemsCollectionState, action: PayloadAction<number>):void {
+    setPage(state: IItemsCollectionState, action: PayloadAction<number>): void {
       state.page = action.payload;
     },
-    setPageLimit(state: IItemsCollectionState, action: PayloadAction<number>):void {
+    setPageLimit(
+      state: IItemsCollectionState,
+      action: PayloadAction<number>
+    ): void {
       state.limit = action.payload;
     },
-    setSortBy(state: IItemsCollectionState, action: PayloadAction<string>):void {
+    setSortBy(
+      state: IItemsCollectionState,
+      action: PayloadAction<string>
+    ): void {
       state.sortBy = action.payload;
     },
-    setOrder(state: IItemsCollectionState, action: PayloadAction<string>):void {
+    setOrder(
+      state: IItemsCollectionState,
+      action: PayloadAction<string>
+    ): void {
       state.order = action.payload;
     },
     setCategory(
       state: IItemsCollectionState,
       action: PayloadAction<ECategory>
-    ):void {
+    ): void {
       state.category = action.payload;
     },
     loadItems(
@@ -57,8 +69,8 @@ export const itemsCollectionSlice = createSlice({
     ): void {
       state.items = action.payload;
     },
-    clearFilters(state: IItemsCollectionState) {
-      const { order, sortBy  } = defaultState
+    clearFilters(state: IItemsCollectionState): void {
+      const { order, sortBy } = defaultState;
       state.sortBy = sortBy;
       state.order = order;
     },
@@ -81,15 +93,8 @@ const {
 function* loadItemsRun() {
   yield put(setIsLoading(true));
 
-  const {
-    limit,
-    page,
-    sortBy,
-    order,
-    category,
-  }: IItemsCollectionState = yield select(
-    (state: StoreStateType) => state.itemsCollection
-  );
+  const { limit, page, sortBy, order, category }: IItemsCollectionState =
+    yield select((state: StoreStateType) => state.itemsCollection);
 
   const params: IItemsCollectionFilter = {
     limit,
@@ -97,8 +102,8 @@ function* loadItemsRun() {
     sortBy,
     order,
     category,
-  };    
-  
+  };
+
   const { response, error } = yield call(Api.getItems, params);
   if (error) {
     alert(`Error: ${error}`);

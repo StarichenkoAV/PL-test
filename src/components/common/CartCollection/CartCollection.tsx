@@ -18,7 +18,7 @@ export const CartsCollection: FC = () => {
   const isShowCardItems = cartItems.length === 0;
   const totallPriceTitle = `Итоговая цена: ${totallPrice} р.`;
 
-  const onClearCart = () => {
+  const onClearCart = (): void => {
     dispatch(clearCart());
   };
 
